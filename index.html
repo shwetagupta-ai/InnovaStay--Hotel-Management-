@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>InnovaStay | Find and book your perfect hotel stay</title>
+<meta name="description" content="InnovaStay - search hotels by city, price, room type and guests. Book rooms, order food and manage your stay online.">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<script src="/js/theme-init.js"></script>
+<link rel="stylesheet" href="/css/theme.css">
+<link rel="stylesheet" href="/css/landing.css">
+</head>
+<body class="landing">
+
+<!-- ============ NAVBAR ============ -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/" aria-label="InnovaStay home"><img src="/assets/img/logo.svg" alt="" width="38" height="38"><span>InnovaStay</span></a>
+    <nav class="nav-links" id="navLinks" aria-label="Main">
+      <a href="#search">Find a stay</a>
+      <a href="#destinations">Destinations</a>
+      <a href="#why">Why InnovaStay</a>
+      <a href="#offers">Offers</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#portals">Portals</a>
+    </nav>
+    <div class="nav-actions">
+      <span id="themeSlot"></span>
+      <div class="dropdown" id="loginMenu">
+        <button class="btn btn-primary" id="loginBtn" type="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret" aria-hidden="true"></span></button>
+        <div class="dropdown-panel" role="menu">
+          <div class="dd-title">Choose your portal</div>
+          <a role="menuitem" href="/login.html?portal=customer"><i data-i="user"></i><span><b>Customer</b><small>Bookings, food &amp; rewards</small></span></a>
+          <a role="menuitem" href="/login.html?portal=staff"><i data-i="users"></i><span><b>Staff</b><small>Front desk, housekeeping &amp; more</small></span></a>
+          <a role="menuitem" href="/login.html?portal=admin"><i data-i="shield"></i><span><b>Hotel Admin</b><small>Manage your hotel</small></span></a>
+          <a role="menuitem" href="/login.html?portal=platform"><i data-i="globe"></i><span><b>Platform Admin</b><small>All hotels &amp; users</small></span></a>
+        </div>
+      </div>
+      <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ============ HERO (image + search filter) ============ -->
+<section class="hero" id="top">
+  <img class="hero-img" src="/assets/img/hero.svg" alt="InnovaStay hotel at night with a glowing blue skyline" fetchpriority="high">
+  <div class="hero-shade"></div>
+  <span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span>
+
+  <div class="wrap hero-content">
+    <p class="eyebrow reveal">Hotels in India's favourite cities</p>
+    <h1 class="reveal d1">Stay somewhere <em>unforgettable.</em></h1>
+    <p class="lead reveal d2">Search, compare and book rooms in seconds. Order food to your room, track your bill and earn rewards on every stay.</p>
+
+    <form class="search-panel reveal d3" id="searchForm" novalidate aria-label="Search hotels">
+      <div class="sp-field">
+        <label for="fCity"><i data-i="mappin"></i> City</label>
+        <select id="fCity" name="city"><option value="">Any city</option></select>
+      </div>
+      <div class="sp-field sp-price">
+        <label for="fMin"><i data-i="wallet"></i> Price per night <b id="priceLabel"></b></label>
+        <div class="range" id="range">
+          <div class="range-track"><div class="range-fill" id="rangeFill"></div></div>
+          <input type="range" id="fMin" name="min" aria-label="Minimum price" min="0" max="20000" step="500" value="0">
+          <input type="range" id="fMax" name="max" aria-label="Maximum price" min="0" max="20000" step="500" value="20000">
+        </div>
+      </div>
+      <div class="sp-field">
+        <label for="fType"><i data-i="bed"></i> Room type</label>
+        <select id="fType" name="type"><option value="">Any type</option></select>
+      </div>
+      <div class="sp-field">
+        <label for="fGuests"><i data-i="users"></i> People</label>
+        <div class="stepper">
+          <button type="button" id="gMinus" aria-label="Fewer people">&minus;</button>
+          <input id="fGuests" name="guests" type="number" min="1" max="12" value="2" inputmode="numeric" aria-label="Number of people">
+          <button type="button" id="gPlus" aria-label="More people">+</button>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-lg sp-go" type="submit" id="goBtn"><i data-i="search"></i> Search</button>
+      <button class="sp-more" type="button" id="moreBtn" aria-expanded="false">+ Add dates for live availability &amp; exact prices</button>
+      <div class="sp-dates hidden" id="dates">
+        <div class="sp-field"><label for="fIn">Check-in</label><input type="date" id="fIn" name="checkin"></div>
+        <div class="sp-field"><label for="fOut">Check-out</label><input type="date" id="fOut" name="checkout"></div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="wrap stats" id="stats" aria-label="InnovaStay at a glance">
+  <div class="stat reveal"><b data-count="0" id="stHotels">0</b><span>Hotels</span></div>
+  <div class="stat reveal d1"><b data-count="0" id="stRooms">0</b><span>Rooms</span></div>
+  <div class="stat reveal d2"><b data-count="0" id="stGuests">0</b><span>Happy guests</span></div>
+  <div class="stat reveal d3"><b id="stRating">-</b><span>Average rating</span></div>
+</section>
+
+<!-- ============ RESULTS ============ -->
+<section class="wrap section" id="search">
+  <div class="section-head reveal">
+    <div><p class="eyebrow">Search results</p><h2 id="resultsTitle">Featured stays</h2></div>
+    <label class="sort">Sort by
+      <select id="fSort"><option value="price_asc">Price: low to high</option><option value="price_desc">Price: high to low</option><option value="rating">Top rated</option></select>
+    </label>
+  </div>
+  <div id="results" class="results" aria-live="polite"></div>
+</section>
+
+<!-- ============ DESTINATIONS ============ -->
+<section class="wrap section" id="destinations">
+  <div class="section-head reveal"><div><p class="eyebrow">Destinations</p><h2>Pick a city, we'll handle the rest</h2></div></div>
+  <div class="dest-grid" id="destGrid"></div>
+</section>
+
+<!-- ============ WHY ============ -->
+<section class="band" id="why">
+  <div class="wrap">
+    <div class="section-head reveal"><div><p class="eyebrow">Why InnovaStay</p><h2>Everything for your stay, in one place</h2></div></div>
+    <div class="feat-grid">
+      <article class="feat reveal"><i data-i="sparkle"></i><h3>Smart room picks</h3><p>Tell us your budget, group size and must-have amenities and we rank the best-fit rooms for you.</p></article>
+      <article class="feat reveal d1"><i data-i="tag"></i><h3>Fair dynamic pricing</h3><p>Prices follow season, weekends and occupancy, shown up front with GST. No surprises at checkout.</p></article>
+      <article class="feat reveal d2"><i data-i="qr"></i><h3>QR check-in &amp; room service</h3><p>Show your booking QR at the desk. Scan the QR in your room to order food or request services.</p></article>
+      <article class="feat reveal d3"><i data-i="gift"></i><h3>Loyalty rewards</h3><p>Bronze, Silver and Gold tiers, birthday offers, referral rewards and coupon codes.</p></article>
+      <article class="feat reveal"><i data-i="receipt"></i><h3>Instant invoices</h3><p>Room, food and service charges on one printable GST invoice with part-payments and refunds.</p></article>
+      <article class="feat reveal d1"><i data-i="shield"></i><h3>Secure by design</h3><p>Encrypted passwords, protected sessions, lockouts and rate limits keep your details safe.</p></article>
+      <article class="feat reveal d2"><i data-i="bell"></i><h3>Timely reminders</h3><p>Booking confirmations, check-in reminders, payment alerts and offers delivered in your account.</p></article>
+      <article class="feat reveal d3"><i data-i="heart"></i><h3>Real guest reviews</h3><p>Rate rooms, restaurant and staff. Hotels respond to every complaint.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OFFERS ============ -->
+<section class="wrap section" id="offers">
+  <div class="section-head reveal"><div><p class="eyebrow">Offers</p><h2>Save more on your next booking</h2></div></div>
+  <div class="offer-grid" id="offerGrid"></div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section class="band alt" id="reviews">
+  <div class="wrap">
+    <div class="section-head reveal"><div><p class="eyebrow">Guest stories</p><h2>Loved by travellers</h2></div></div>
+    <div class="rev-grid" id="revGrid"></div>
+  </div>
+</section>
+
+<!-- ============ PORTALS ============ -->
+<section class="wrap section" id="portals">
+  <div class="section-head reveal"><div><p class="eyebrow">Login</p><h2>One sign-in, four portals</h2></div></div>
+  <p class="muted reveal" style="max-width:640px">Log in with your username, mobile number or e-mail and your password. You will land in the dashboard that matches your role.</p>
+  <div class="portal-grid">
+    <a class="portal-card reveal" href="/login.html?portal=customer"><i data-i="user"></i><h3>Customer</h3><p>Book rooms, order food, pay bills, collect rewards.</p><span>Open portal &rarr;</span></a>
+    <a class="portal-card reveal d1" href="/login.html?portal=staff"><i data-i="users"></i><h3>Staff</h3><p>Reception, housekeeping, restaurant, accounts and maintenance.</p><span>Open portal &rarr;</span></a>
+    <a class="portal-card reveal d2" href="/login.html?portal=admin"><i data-i="shield"></i><h3>Hotel Admin</h3><p>Rooms, pricing, employees, reports and analytics.</p><span>Open portal &rarr;</span></a>
+    <a class="portal-card reveal d3" href="/login.html?portal=platform"><i data-i="globe"></i><h3>Platform Admin</h3><p>Onboard hotels, manage admins and monitor the system.</p><span>Open portal &rarr;</span></a>
+  </div>
+</section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap foot-grid">
+    <div><a class="brand light" href="/"><img src="/assets/img/logo.svg" alt="" width="34" height="34"><span>InnovaStay</span></a><p>Smart hotel management and booking for guests, staff and owners.</p></div>
+    <div><h4>Explore</h4><a href="#search">Find a stay</a><a href="#destinations">Destinations</a><a href="#offers">Offers</a><a href="#reviews">Reviews</a></div>
+    <div><h4>Portals</h4><a href="/login.html?portal=customer">Customer</a><a href="/login.html?portal=staff">Staff</a><a href="/login.html?portal=admin">Hotel Admin</a><a href="/login.html?portal=platform">Platform Admin</a></div>
+    <div><h4>Contact</h4><span>support@innovastay.com</span><span>+91 98000 00000</span><span>Open 24 x 7</span></div>
+  </div>
+  <div class="wrap foot-base"><span>&copy; <span id="yr"></span> InnovaStay. All rights reserved.</span><span>Made with care in India</span></div>
+</footer>
+
+<script src="/js/common.js"></script>
+<script src="/js/landing.js"></script>
+</body>
+</html>

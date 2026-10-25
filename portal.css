@@ -1,0 +1,76 @@
+/* Dashboard shell shared by the Customer, Admin, Staff and Platform portals. */
+.app { display: grid; grid-template-columns: 264px minmax(0, 1fr); min-height: 100vh; }
+.sidebar {
+  position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; padding: 18px 14px; color: #dbe7ff; overflow-y: auto; z-index: 60;
+  background: linear-gradient(180deg, #0a2463 0%, #0b3190 55%, #0d4bc7 100%); scrollbar-width: thin;
+}
+[data-theme="dark"] .sidebar { background: linear-gradient(180deg, #08142f 0%, #0b1f4d 60%, #0c2b6b 100%); border-right: 1px solid var(--border); }
+.brand { display: flex; align-items: center; gap: 11px; padding: 6px 8px 18px; color: #fff; text-decoration: none !important; }
+.brand img { width: 38px; height: 38px; }
+.brand b { display: block; font-family: var(--font-display); font-size: 21px; letter-spacing: .01em; line-height: 1.1; }
+.brand small { display: block; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .7; margin-top: 2px; }
+.nav-group { margin: 14px 10px 6px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(219, 231, 255, .55); }
+.nav-item {
+  display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; margin: 2px 0; border-radius: 11px; border: none; background: transparent;
+  color: #dbe7ff; font-size: 14.5px; font-weight: 550; cursor: pointer; text-align: left; text-decoration: none !important; position: relative;
+  transition: background-color .2s, transform .2s, color .2s;
+}
+.nav-item:hover { background: rgba(255, 255, 255, .1); transform: translateX(3px); }
+.nav-item.active { background: rgba(255, 255, 255, .17); color: #fff; box-shadow: inset 3px 0 0 #7fd3ff; }
+.nav-item .count { margin-left: auto; background: #ff5d6c; color: #fff; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 99px; }
+.sidebar-foot { margin-top: auto; padding-top: 16px; }
+.side-user { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 13px; background: rgba(255, 255, 255, .09); color: #fff; }
+.side-user .avatar { background: rgba(255, 255, 255, .22); }
+.side-user small { display: block; opacity: .7; font-size: 12px; text-transform: capitalize; }
+
+.main { min-width: 0; display: flex; flex-direction: column; }
+.topbar {
+  position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: 12px; padding: 12px 26px; backdrop-filter: blur(14px);
+  background: color-mix(in srgb, var(--bg) 82%, transparent); border-bottom: 1px solid var(--border);
+}
+.topbar .menu-btn { display: none; }
+.topbar .crumb { font-weight: 700; font-size: 16px; }
+.topbar .spacer { flex: 1; }
+.content { padding: 26px; max-width: 1480px; width: 100%; margin: 0 auto; }
+.page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 22px; }
+.page-head h1 { font-size: 27px; margin: 0 0 2px; font-family: var(--font-display); font-weight: 700; }
+.page { animation: fadeUp .45s cubic-bezier(.2, .8, .2, 1) both; }
+
+/* global search */
+.gsearch { position: relative; width: min(380px, 38vw); }
+.gsearch .input { padding-left: 38px; background: var(--surface); }
+.gsearch .ico { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+.dropdown { position: absolute; right: 0; top: calc(100% + 8px); min-width: 300px; max-height: 70vh; overflow-y: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow-lg); z-index: 80; animation: popIn .2s ease; }
+.gsearch .dropdown { left: 0; right: auto; width: 100%; min-width: 280px; }
+.dd-head { padding: 10px 14px 4px; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.dd-item { display: flex; gap: 10px; align-items: center; padding: 9px 14px; cursor: pointer; border: none; background: none; width: 100%; text-align: left; color: var(--text); font-size: 14px; }
+.dd-item:hover { background: var(--surface-2); }
+.dd-item small { display: block; color: var(--muted); }
+.bell { position: relative; }
+.bell .dot-count { position: absolute; top: 2px; right: 2px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 99px; background: #ff5d6c; color: #fff; font-size: 10.5px; font-weight: 700; display: grid; place-items: center; animation: pulseRing 1.8s infinite; }
+.notif { width: 360px; max-width: 92vw; padding: 0; }
+.notif-item { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; gap: 10px; cursor: default; }
+.notif-item.unread { background: var(--primary-soft); }
+.notif-item b { display: block; font-size: 14px; }
+.notif-item span { font-size: 13px; color: var(--muted); display: block; }
+.notif-item time { font-size: 11.5px; color: var(--muted); }
+.user-menu { position: relative; }
+.user-btn { display: flex; align-items: center; gap: 9px; padding: 4px 10px 4px 4px; border: 1px solid var(--border); background: var(--surface); border-radius: 99px; cursor: pointer; color: var(--text); }
+.user-btn .avatar { width: 32px; height: 32px; font-size: 13px; }
+.user-btn span.nm { font-weight: 600; font-size: 14px; max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.menu { min-width: 230px; padding: 6px; }
+.menu .dd-item { border-radius: 9px; }
+.menu hr { border: none; border-top: 1px solid var(--border); margin: 6px 0; }
+
+.scrim { display: none; }
+@media (max-width: 960px) {
+  .app { grid-template-columns: minmax(0, 1fr); }
+  .sidebar { position: fixed; left: 0; top: 0; width: 280px; transform: translateX(-102%); transition: transform .3s cubic-bezier(.2, .8, .2, 1); box-shadow: var(--shadow-lg); }
+  .app.nav-open .sidebar { transform: none; }
+  .app.nav-open .scrim { display: block; position: fixed; inset: 0; background: rgba(5, 12, 35, .5); z-index: 55; animation: fadeIn .2s; }
+  .topbar { padding: 10px 14px; } .topbar .menu-btn { display: inline-flex; }
+  .content { padding: 16px 14px 40px; }
+  .gsearch { display: none; }
+  .user-btn span.nm { display: none; }
+  .page-head h1 { font-size: 23px; }
+}

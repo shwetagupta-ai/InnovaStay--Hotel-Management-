@@ -1,0 +1,17 @@
+{
+  "name": "innovastay",
+  "version": "1.0.0",
+  "description": "InnovaStay - Hotel Management System (Node.js + SQLite + vanilla JS, zero npm dependencies)",
+  "main": "backend/server.js",
+  "private": true,
+  "license": "MIT",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning backend/server.js",
+    "start:cluster": "node --disable-warning=ExperimentalWarning backend/server.js --cluster",
+    "dev": "node --watch --disable-warning=ExperimentalWarning backend/server.js",
+    "db:init": "node --disable-warning=ExperimentalWarning database/seed.js",
+    "db:reset": "node --disable-warning=ExperimentalWarning database/seed.js --reset",
+    "test": "node --disable-warning=ExperimentalWarning tests/smoke.js"
+  }
+}

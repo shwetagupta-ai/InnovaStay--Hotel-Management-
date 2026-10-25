@@ -1,0 +1,8 @@
+.env
+database/*.db
+database/*.db-shm
+database/*.db-wal
+database/.secret
+database/.jwt_secret
+node_modules
+_attic
